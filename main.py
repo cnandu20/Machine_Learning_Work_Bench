@@ -1,6 +1,8 @@
 
 import Machine_Learning_Work_Bench.frames.linear_regression as lr
 import Machine_Learning_Work_Bench.frames.logistic_regression  as lg
+import Machine_Learning_Work_Bench.frames.knn_frame  as knn_alg
+
 
 from tkinter import *
 
@@ -11,6 +13,9 @@ def linear():
 
 def lgf():
     lg.lgframe()
+
+def knnfun():
+    knn_alg.knnframe()
 
 
 
@@ -31,6 +36,8 @@ def start():
     regression = Button(category, text="Linear Regression", command=linear).pack(side=TOP)
 
     logistic_regression = Button(category, text="Logistic Regression", command=lgf).pack(side=TOP)
+
+    knn = Button(category, text="K-Nearest Neighbor", command=knnfun).pack(side=TOP)
 
     top.mainloop()
 
