@@ -4,6 +4,7 @@ import Machine_Learning_Work_Bench.frames.logistic_regression  as lg
 import Machine_Learning_Work_Bench.frames.knn_frame  as knn_alg
 import Machine_Learning_Work_Bench.frames.svm_frame as svm
 import Machine_Learning_Work_Bench.frames.naive_bayes_frame as nb
+import Machine_Learning_Work_Bench.frames.random_forest_frame as random_forest
 
 
 from tkinter import *
@@ -24,6 +25,9 @@ def svmfun():
 
 def nbfun():
     nb.nbframe()
+
+def rffun():
+    random_forest.random_forest_frame()
 
 
 def start():
@@ -49,6 +53,8 @@ def start():
     svm = Button(category, text="Support Vector Machine", command=svmfun).pack(side=TOP)
 
     nb = Button(category, text="Naive Bayes", command=nbfun).pack(side=TOP)
+
+    rf = Button(category, text="Random Forest", command=rffun).pack(side=TOP)
 
     top.mainloop()
 
