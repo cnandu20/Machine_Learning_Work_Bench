@@ -2,6 +2,7 @@
 import Machine_Learning_Work_Bench.frames.linear_regression as lr
 import Machine_Learning_Work_Bench.frames.logistic_regression  as lg
 import Machine_Learning_Work_Bench.frames.knn_frame  as knn_alg
+import Machine_Learning_Work_Bench.frames.svm_frame as svm
 
 
 from tkinter import *
@@ -16,6 +17,9 @@ def lgf():
 
 def knnfun():
     knn_alg.knnframe()
+
+def svmfun():
+    svm.svmframe()
 
 
 
@@ -38,6 +42,8 @@ def start():
     logistic_regression = Button(category, text="Logistic Regression", command=lgf).pack(side=TOP)
 
     knn = Button(category, text="K-Nearest Neighbor", command=knnfun).pack(side=TOP)
+
+    svm = Button(category, text="Support Vector Machine", command=svmfun).pack(side=TOP)
 
     top.mainloop()
 
