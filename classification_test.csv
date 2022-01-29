@@ -1,4 +1,4 @@
-User,ID,Gender,Age,Salary
+id,Gender,Age,salary
 1,male,15,19000
 2,male,35,25000
 3,female,22,46000

@@ -26,8 +26,8 @@ def logistic_regression(path,feature_list,category_list):
     y = data.iloc[:, category_list_index].values
 
 
-
-    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
+    #random_state=0
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 
     print("in algo")
     print(x_test)
@@ -43,8 +43,6 @@ def logistic_regression(path,feature_list,category_list):
     print("predited testdata")
     print(y_pred)
 
-
-    print(classifier.predict(st_x.transform([[50,60000],[28,25000]])))
     return classifier.score(x_test,y_test),classifier,feature_list_index
 
 

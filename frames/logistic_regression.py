@@ -5,6 +5,8 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import  os
 import Machine_Learning_Work_Bench.algorithm.logistic_regression as lgalgorithm
+from subprocess import Popen
+
 
 def lgframe():
     features=[]
@@ -76,7 +78,7 @@ def train(path,feature_list,category_list,user):
 
       score,classifier,feature_list_index = lgalgorithm.logistic_regression(path,feature_list,category_list)
       if(score):
-          output_frame=Frame(bg='red').place(x=150,y=150,width=400,height=250)
+          output_frame=Frame().place(x=150,y=150,width=400,height=250)
           Label(output_frame,text="Test Score:").place(x=160,y=120)
           Label(output_frame, text=score).place(x=250, y=120)
 
@@ -86,25 +88,28 @@ def train(path,feature_list,category_list,user):
 
   else:
       print("invalid training")
-      l4=Label(msgframe, text="canot proceed").place(x=810,y=650)
+      l4=Label(msgframe, text="can't proceed with out selection complete").place(x=810,y=650)
 
 
 
-def model(path,classifier,feature_list_index):
+def model(path,classifier,feature_list_index,output_frame):
     data = pd.read_csv(path)
 
     x_test = data.iloc[:, feature_list_index].values
     print(x_test)
-    st_x = StandardScaler()
-    x_test = st_x.transform(x_test)
-    print(x_test)
-    print(classifier.predict([[   26,5000]]))
+    y_pred=classifier.predict(x_test)
+    data['prediction']=y_pred
+    data.to_csv("prediction.csv",index=False)
+    if(Popen('prediction.csv',shell=True)):
+        Label(output_frame,text="Result is saved to prediction.csv file with prediction column").place(x=160,y=320)
 
+    else:
+        Label(output_frame, text="Cant open your excel \n""check directory Result is saved to prediction.csv file").place(x=160, y=320)
 
 def gettestfile(classifier,output_frame,feature_list_index):
     file = askopenfile(mode='r', filetypes=[('CSV Files', '*.csv')])
     if (file):
         path = os.path.realpath(file.name)
         Label(text=str(path)).place(x=200, y=220)
-        button3 = Button(output_frame, text="Test data", command=lambda: model(path,classifier,feature_list_index,))
+        button3 = Button(output_frame, text="Test data", command=lambda: model(path,classifier,feature_list_index,output_frame))
         button3.place(x=160, y=280)
