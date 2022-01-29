@@ -1,9 +1,16 @@
 import pandas as pd
 import  matplotlib.pyplot as plt
+import os
 
 
-data=pd.read_csv('dataset.csv')
-print(data.shape)
+abs=os.path.abspath('dataset.csv')
+print(abs)
+
+
+
+data=pd.read_csv(abs)
+print(data.columns.values.tolist())
+
 
 def loss_function(m,b,points):
     total_error = 0
@@ -50,3 +57,6 @@ def start():
     plt.scatter(data.studytime, data.score, color="black")
     plt.plot(list(range(40, 80)), [m * x + b for x in range(40, 80)], color="red")
     plt.show()
+
+def features():
+    return  pd.columns.values.tolist()

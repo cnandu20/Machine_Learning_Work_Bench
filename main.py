@@ -1,5 +1,6 @@
-import algorithm.linear_regression as lr
-import frames.linear_regression as lr
+
+import Machine_Learning_Work_Bench.frames.linear_regression as lr
+import Machine_Learning_Work_Bench.frames.logistic_regression  as lg
 
 from tkinter import *
 
@@ -7,6 +8,9 @@ from tkinter import *
 
 def linear():
     lr.lrframe()
+
+def lgf():
+    lg.lgframe()
 
 
 
@@ -25,6 +29,8 @@ def start():
     category.place(x=1000, y=80, height=600)
 
     regression = Button(category, text="Linear Regression", command=linear).pack(side=TOP)
+
+    logistic_regression = Button(category, text="Logistic Regression", command=lgf).pack(side=TOP)
 
     top.mainloop()
 
