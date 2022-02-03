@@ -12,16 +12,18 @@ def lgframe():
     features=[]
 
     print("called succeful")
-    lg=Frame()
+    lg=Frame(bg='blue')
     lg.place(x=0,y=0,width=1200,height=750)
 
-    user = Frame(lg,bd=2).place(x=800,width=400,height=750)
+    # user = Frame(lg,bd=2,bg='red').place(x=800,width=400,height=750)
+    backbtn = Button(lg, text="go back", command=lambda: back(lg))
+    backbtn.place(x=25, y=25)
 
-    l1 =Label(user, text="Trainset")
+    l1 =Label(lg, text="Trainset")
 
     l1.place(x=810, y=50)
 
-    button1 = Button(user, text="Upload Dataset", command=lambda :gettraindata(user))
+    button1 = Button(lg, text="Upload Dataset", command=lambda :gettraindata(lg))
 
     # this will arrange  widgets
 
@@ -34,7 +36,7 @@ def gettraindata(user):
     file= askopenfile(mode ='r', filetypes =[('CSV Files', '*.csv')])
     if(file):
         path = os.path.realpath(file.name)
-        Label(text=str(path)).place(x = 805 ,y = 75)
+        Label(user,text=str(path)).place(x = 805 ,y = 75)
         feature_list = Listbox(user, selectmode="multiple",exportselection=False)
         feature_list.place(x=810, y=150)
         features = lgalgorithm.features(path)
@@ -63,7 +65,7 @@ def getlistitem(listbox):
 
 def train(path,feature_list,category_list,user):
 
-  msgframe=Frame(user).place(x=810,y=650,width=400,height=250)
+  # msgframe=Frame(user,bg='green').place(x=810,y=650,width=400,height=250)
 
   print(len(feature_list.curselection()))
   print(len(category_list.curselection()))
@@ -74,21 +76,22 @@ def train(path,feature_list,category_list,user):
 
       category_list = getlistitem(category_list);
       print(category_list)
-      l4 = Label(msgframe, text="preparing model,please wait").place(x=810, y=650)
+      l4 = Label(user, text="preparing model,please wait for complete").place(x=810, y=650)
 
       score,classifier,feature_list_index = lgalgorithm.logistic_regression(path,feature_list,category_list)
       if(score):
-          output_frame=Frame().place(x=150,y=150,width=400,height=250)
-          Label(output_frame,text="Test Score:").place(x=160,y=120)
-          Label(output_frame, text=score).place(x=250, y=120)
+          # output_frame=Frame(bg='yellow').place(x=150,y=150,width=400,height=250)
+          Label(user,text="Test Score:").place(x=160,y=120)
+          Label(user, text=score).place(x=250, y=120)
 
-          l1 = Label(output_frame, text="Tsetdata")
+          l1 = Label(user, text="Test dataset")
           l1.place(x=160, y=180)
-          button1 = Button(user, text="Upload Dataset", command=lambda: gettestfile(classifier,output_frame,feature_list_index)).place(x=250,y=180)
+          button1 = Button(user, text="Upload Dataset", command=lambda: gettestfile(classifier,user,feature_list_index))
+          button1.place(x=250,y=180)
 
   else:
       print("invalid training")
-      l4=Label(msgframe, text="can't proceed with out selection complete").place(x=810,y=650)
+      l4=Label(user, text="can't proceed with out selection complete").place(x=810,y=650)
 
 
 
@@ -110,6 +113,11 @@ def gettestfile(classifier,output_frame,feature_list_index):
     file = askopenfile(mode='r', filetypes=[('CSV Files', '*.csv')])
     if (file):
         path = os.path.realpath(file.name)
-        Label(text=str(path)).place(x=200, y=220)
+        l5=Label(output_frame,text=str(path))
+        l5.place(x=200, y=220)
         button3 = Button(output_frame, text="Test data", command=lambda: model(path,classifier,feature_list_index,output_frame))
         button3.place(x=160, y=280)
+
+
+def back(frame):
+    frame.destroy()

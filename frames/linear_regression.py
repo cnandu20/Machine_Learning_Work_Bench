@@ -4,18 +4,21 @@ import  os
 
 def lrframe():
     print("called succeful")
-    lr=Frame()
+    lr=Frame(bg='blue')
     lr.place(x=0,y=0,width=1200,height=750)
+    print(lr)
 
-    user=Frame(lr,bd=2).place(x=800,width=400,height=750)
+    # user=Frame(lr,bg='red')
+    # user.place(x=800,width=400,height=750)
+    # print(user)
+    backbtn=Button(lr,text="go back",command=lambda :back(lr))
+    backbtn.place(x=25,y=25)
 
-
-
-    l1 =Label(user, text="Trainset")
-    l2 = Label(user, text="Gradient:")
-    l3 = Label(user, text="Intersect:")
-    l4 = Label(user, text="Epoch:")
-    l5 = Label(user, text="Learning rate:")
+    l1 =Label(lr, text="Trainset")
+    l2 = Label(lr, text="Gradient:")
+    l3 = Label(lr, text="Intersect:")
+    l4 = Label(lr, text="Epoch:")
+    l5 = Label(lr, text="Learning rate:")
 
     l1.place(x = 810, y = 50)
     l2.place(x = 810, y = 120)
@@ -25,12 +28,12 @@ def lrframe():
 
 
 
-    button1 = Button(user, text="Upload Dataset", command=fileopen)
-    m = Entry(user)
-    b = Entry(user)
-    epoch = Entry(user)
-    L = Entry(user)
-    button2 = Button(user, text="Train Model")
+    button1 = Button(lr, text="Upload Dataset", command=fileopen)
+    m = Entry(lr)
+    b = Entry(lr)
+    epoch = Entry(lr)
+    L = Entry(lr)
+    button2 = Button(lr, text="Train Model")
 
     # this will arrange  widgets
 
@@ -54,3 +57,5 @@ def fileopen():
 
 
 
+def back(lr):
+    lr.destroy()
