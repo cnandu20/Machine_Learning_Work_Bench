@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter.filedialog import askopenfile
-from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import  os
@@ -12,12 +11,12 @@ def lgframe():
     features=[]
 
     print("called succeful")
-    lg=Frame(bg='blue')
+    lg=Frame()
     lg.place(x=0,y=0,width=1200,height=750)
 
-    # user = Frame(lg,bd=2,bg='red').place(x=800,width=400,height=750)
-    backbtn = Button(lg, text="go back", command=lambda: back(lg))
-    backbtn.place(x=25, y=25)
+
+    backbtn = Button(lg,text="Go back", height=3,width=9, command=lambda: back(lg))
+    backbtn.place(x=0, y=10)
 
     l1 =Label(lg, text="Trainset")
 
@@ -29,7 +28,7 @@ def lgframe():
 
     button1.place(x = 950,y = 50)
 
-    title=Label(lg,text="Logistic Regression").place(x=290,y=50)
+    title=Label(lg, text="  LOGISTIC REGRESSION   ", font=20,bg='#141414',fg='white',height=2,).place(x=75,y=10)
 
 
 def gettraindata(user):
@@ -99,6 +98,13 @@ def model(path,classifier,feature_list_index,output_frame):
     data = pd.read_csv(path)
 
     x_test = data.iloc[:, feature_list_index].values
+
+
+    st_x = StandardScaler()
+    st_x.fit(x_test)
+    x_test = st_x.transform(x_test)
+
+
     print(x_test)
     y_pred=classifier.predict(x_test)
     data['prediction']=y_pred

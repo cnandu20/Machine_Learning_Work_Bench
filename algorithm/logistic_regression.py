@@ -20,7 +20,7 @@ def logistic_regression(path,feature_list,category_list):
 
     print(feature_list_index)
 
-    #indepedent feautere values stored in x and depedent is in y
+    #indepedent feautere values stored in x and depedent features in y
 
     x = data.iloc[:, feature_list_index].values
     y = data.iloc[:, category_list_index].values

@@ -15,26 +15,29 @@ def svmframe():
     lg=Frame()
     lg.place(x=0,y=0,width=1200,height=750)
 
-    user = Frame(lg,bd=2).place(x=800,width=400,height=750)
+    # user = Frame(lg,bd=2).place(x=800,width=400,height=750)
 
-    l1 =Label(user, text="Trainset")
+    backbtn = Button(lg, text="Go back", height=3, width=9, command=lambda: back(lg))
+    backbtn.place(x=0, y=10)
+
+    l1 =Label(lg, text="Trainset")
 
     l1.place(x=810, y=50)
 
-    button1 = Button(user, text="Upload Dataset", command=lambda :gettraindata(user))
+    button1 = Button(lg, text="Upload Dataset", command=lambda :gettraindata(lg))
 
     # this will arrange  widgets
 
     button1.place(x = 950,y = 50)
 
-    title=Label(lg,text="Logistic Regression").place(x=290,y=50)
+    title = Label(lg, text="  SUPPORT VECTOR MACHINE  ", font=20, bg='#141414', fg='white', height=2, ).place(x=75, y=10)
 
 
 def gettraindata(user):
     file= askopenfile(mode ='r', filetypes =[('CSV Files', '*.csv')])
     if(file):
         path = os.path.realpath(file.name)
-        Label(text=str(path)).place(x = 805 ,y = 75)
+        Label(user,text=str(path)).place(x = 805 ,y = 75)
         feature_list = Listbox(user, selectmode="multiple",exportselection=False)
         feature_list.place(x=810, y=150)
         features = svm.features(path)
@@ -52,7 +55,7 @@ def gettraindata(user):
         button2 = Button(user, text="Train Model",command=lambda :train(path,feature_list,category_list,user))
         button2.place(x=1000, y=600)
     else:
-        Label(text="unable to load file".place(x=805, y=75))
+        Label(user,text="unable to load file".place(x=805, y=75))
 
 
 def getlistitem(listbox):
@@ -63,7 +66,7 @@ def getlistitem(listbox):
 
 def train(path,feature_list,category_list,user):
 
-  msgframe=Frame(user).place(x=810,y=650,width=400,height=250)
+  # msgframe=Frame(user).place(x=810,y=650,width=400,height=250)
 
   print(len(feature_list.curselection()))
   print(len(category_list.curselection()))
@@ -74,21 +77,21 @@ def train(path,feature_list,category_list,user):
 
       category_list = getlistitem(category_list);
       print(category_list)
-      l4 = Label(msgframe, text="preparing model,please wait").place(x=810, y=650)
+      l4 = Label(user, text="preparing model,please wait").place(x=810, y=650)
 
       score,classifier,feature_list_index = svm.svm_algorithm(path,feature_list,category_list)
       if(score):
-          output_frame=Frame().place(x=150,y=150,width=400,height=250)
-          Label(output_frame,text="Test Score:").place(x=160,y=120)
-          Label(output_frame, text=score).place(x=250, y=120)
+          # output_frame=Frame().place(x=150,y=150,width=400,height=250)
+          Label(user, text="Test Score:").place(x=160, y=120)
+          Label(user, text=score).place(x=250, y=120)
 
-          l1 = Label(output_frame, text="Tsetdata")
+          l1 = Label(user, text="Test dataset")
           l1.place(x=160, y=180)
-          button1 = Button(user, text="Upload Dataset", command=lambda: gettestfile(classifier,output_frame,feature_list_index)).place(x=250,y=180)
+          button1 = Button(user, text="Upload Dataset", command=lambda: gettestfile(classifier,user,feature_list_index)).place(x=250,y=180)
 
   else:
       print("invalid training")
-      l4=Label(msgframe, text="can't proceed with out selection complete").place(x=810,y=650)
+      l4=Label(user, text="can't proceed with out selection complete").place(x=810,y=650)
 
 
 
@@ -96,6 +99,13 @@ def model(path,classifier,feature_list_index,output_frame):
     data = pd.read_csv(path)
 
     x_test = data.iloc[:, feature_list_index].values
+
+
+    st_x = StandardScaler()
+    st_x.fit(x_test)
+    x_test = st_x.transform(x_test)
+
+
     print(x_test)
     y_pred=classifier.predict(x_test)
     data['prediction']=y_pred
@@ -110,6 +120,9 @@ def gettestfile(classifier,output_frame,feature_list_index):
     file = askopenfile(mode='r', filetypes=[('CSV Files', '*.csv')])
     if (file):
         path = os.path.realpath(file.name)
-        Label(text=str(path)).place(x=200, y=220)
+        Label(output_frame,text=str(path)).place(x=200, y=220)
         button3 = Button(output_frame, text="Test data", command=lambda: model(path,classifier,feature_list_index,output_frame))
         button3.place(x=160, y=280)
+
+def back(frame1):
+    frame1.destroy()

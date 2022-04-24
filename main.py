@@ -1,10 +1,10 @@
 
-import Machine_Learning_Work_Bench.frames.linear_regression as lr
-import Machine_Learning_Work_Bench.frames.logistic_regression  as lg
-import Machine_Learning_Work_Bench.frames.knn_frame  as knn_alg
-import Machine_Learning_Work_Bench.frames.svm_frame as svm
-import Machine_Learning_Work_Bench.frames.naive_bayes_frame as nb
-import Machine_Learning_Work_Bench.frames.random_forest_frame as random_forest
+import frames.linear_regression as lr
+import frames.logistic_regression  as lg
+import frames.knn_frame  as knn_alg
+import frames.svm_frame as svm
+import frames.naive_bayes_frame as nb
+import frames.random_forest_frame as random_forest
 
 
 from tkinter import *
@@ -31,30 +31,59 @@ def rffun():
 
 
 def start():
+
     top = Tk()
     top.geometry("1200x750")
     top.maxsize(1200, 750)
     top.minsize(1200, 750)
 
+    top.title('Machine learning workbench')
+
     main = Frame(top)
-    main.place(x=0, y=0, width=1200, height=700)
 
-    welcome = Label(main, text="Machine Learning Workbench").place(x=100, y=268)
+    main.place(x=0, y=0, width=1200, height=750)
 
-    category = Frame(main);
-    category.place(x=1000, y=80, height=600)
+    # welcome image.........from here upto the end is edited.........................................................
+    mlbimg = PhotoImage(file='mlb.png')
+    welcome = Label(main, image=mlbimg)
+    welcome.pack(side=LEFT)
 
-    regression = Button(category, text="Linear Regression", command=linear).pack(side=TOP)
+    # side frame
+    category = Frame(main, bg='#C4C4C4', highlightbackground="black", highlightthickness=1);
+    category.place(x=900, y=0, width=300, height=750)
 
-    logistic_regression = Button(category, text="Logistic Regression", command=lgf).pack(side=TOP)
+    choose = Label(category, bg='#141414', text="Choose algorithms", font=20, fg='white', width=300,
+                   height=5).pack(side=TOP)
 
-    knn = Button(category, text="K-Nearest Neighbor", command=knnfun).pack(side=TOP)
+    # button icons
+    lrimg = PhotoImage(file='lr.png')
 
-    svm = Button(category, text="Support Vector Machine", command=svmfun).pack(side=TOP)
+    lgimg = PhotoImage(file='lg.png')
 
-    nb = Button(category, text="Naive Bayes", command=nbfun).pack(side=TOP)
+    knnimg = PhotoImage(file='knn.png')
 
-    rf = Button(category, text="Random Forest", command=rffun).pack(side=TOP)
+    svmimg = PhotoImage(file='svm.png')
+
+    nbimg = PhotoImage(file='nb.png')
+
+    rfimg = PhotoImage(file='rf.png')
+
+
+
+    logistic_regression = Button(category, image=lgimg, compound=LEFT, text="   Logistic Regression", anchor=W,
+                                 width=300, command=lgf).pack(side=TOP, pady=20)
+
+    knn = Button(category, image=knnimg, compound=LEFT, text="    K-Nearest Neighbor", anchor=W, width=300,
+                 command=knnfun).pack(side=TOP, pady=20)
+
+    svm = Button(category, image=svmimg, compound=LEFT, text="    Support Vector Machine", anchor=W, width=300,
+                 command=svmfun).pack(side=TOP, pady=20)
+
+    nb = Button(category, image=nbimg, compound=LEFT, text="     Naive Bayes  ", anchor=W, width=300,
+                command=nbfun).pack(side=TOP, pady=20)
+
+    rf = Button(category, image=rfimg, compound=LEFT, text="    Random Forest", anchor=W, width=300,
+                command=rffun).pack(side=TOP, pady=20)
 
     top.mainloop()
 
